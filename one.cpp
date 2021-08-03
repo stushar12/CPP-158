@@ -1,32 +1,32 @@
-    void subfill(vector<vector<int>>& image, int x, int y, int newColor,int oldColor) 
+void dfs(vector<vector<int>>& grid,int i,int j,int color,int target)
     {
-        int M = image.size();
-        int N = image[0].size();
-        if(x< 0||x>=M || y <0 || y >= N)
-            return ;
-
-        if (image[x][y] != oldColor)
-            return ;
-        if (image[x][y] == newColor)                    
-            return ;
-
-        image[x][y]=newColor;
-
-        subfill(image,x+1,y,newColor,oldColor) ;        //east
-        subfill(image,x,y+1,newColor,oldColor) ;        //north
-        subfill(image,x-1,y,newColor,oldColor) ;        //west
-        subfill(image,x,y-1,newColor,oldColor) ;        //south
-
-
-        return ;
-    }
-
-vector<vector<int>> floodFill(vector<vector<int>>& image, int x, int y, int newColor) 
-{
-    vector<vector<int>> pic = image;
-    int oldColor = image[x][y];
-    subfill(pic,x,y,newColor,oldColor) ;
-
-    return pic;
+        int m=grid.size();
+        int n=grid[0].size();
     
-}
+            
+        if(i<0 or j<0 or  i>=m or j>=n or grid[i][j]!=target or grid[i][j]==color)
+        {
+            return;
+        }
+
+        
+        grid[i][j]=color;
+        
+        dfs(grid,i+1,j,color,target);
+        dfs(grid,i-1,j,color,target);
+        dfs(grid,i,j+1,color,target);
+        dfs(grid,i,j-1,color,target);
+        
+                        
+    }
+    
+     
+    vector<vector<int>> floodFill(vector<vector<int>>& grid, int sr, int sc, int color) 
+    {
+           int target=grid[sr][sc];
+            
+            dfs(grid,sr,sc,color,target);
+        
+        
+        return grid;
+    }
